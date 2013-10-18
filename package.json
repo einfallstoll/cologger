@@ -1,0 +1,21 @@
+{
+  "name": "cologger",
+  "version": "1.0.0",
+  "author": {
+	"name": "Fabio Poloni",
+	"email": "fabio@APP-roved.com"
+  },
+  "description": "Colorful, simple logger",
+  "keywords": [
+	"color",
+	"logger",
+	"log",
+	"cologger"
+  ],
+  "repository": {
+	"type": "git",
+	"url": "https://github.com/einfallstoll/cologger.git"
+  },
+  "license": "Public Domain",
+  "main": "./logger.js"
+}
