@@ -7,7 +7,7 @@ Colorful, simple node.js logger
 ### require
 
 ````javascript
-var logger = require('cologger')(true);
+var logger = require('cologger');
 ````
 
 ### settings
