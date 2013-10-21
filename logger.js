@@ -1,27 +1,90 @@
-module.exports = function(debug) {
-	var red = '\033[31m'
-	, green = '\033[32m'
-	, yellow = '\033[33m'
-	, blue = '\033[34m'
-	, magenta = '\033[35m'
-	, cyan = '\033[36m'
-	, reset = '\033[0m';
-	return {
-		log: function(message) {
-			console.log('[INFO] ' + message);
-		},
-		debug: function(message) {
-			if (debug)
-				console.log(cyan + '[DEBUG] ' + reset + message);
-		},
-		success: function(message) {
-			console.log(green + '[SUCCESS] ' + reset + message);
-		},
-		warn: function(message) {
-			console.log(yellow + '[WARN] ' + reset + message);
-		},
-		error: function(message) {
-			console.log(red + '[ERROR] ' + reset + message);
+module.exports.showDebug = false;
+
+colors = {
+	red: '\033[31m',
+	green: '\033[32m',
+	yellow: '\033[33m',
+	blue: '\033[34m',
+	magenta: '\033[35m',
+	cyan: '\033[36m',
+	white: '\033[0m'
+};
+module.exports.colors = colors;
+
+levels = {
+	info: {
+		color: 'white',
+		debug: true
+	},
+	debug: {
+		color: 'cyan',
+		debug: true
+	},
+	success: {
+		color: 'green',
+		debug: true
+	},
+	warn: {
+		color: 'yellow',
+		debug: true
+	},
+	error: {
+		color: 'red',
+		debug: true
+	}
+};
+module.exports.levels = levels;
+
+genericLog = function() {
+	var name = arguments[0];
+	var arguments = arguments[1];
+	
+	var upperName = name.toUpperCase();
+	var color = colors[levels[name].color];
+	
+	if (!levels[name].debug || module.exports.showDebug) {
+		var log = color + "[" + upperName + "] " + colors.white;
+		for (var i = 0; i < arguments.length; i++) {
+			if (typeof arguments[i] != 'object') {
+				log += arguments[i];
+			} else {
+				log += JSON.stringify(arguments[i]);
+			}
+			log += ' ';
 		}
-	};
+		console.log(log);
+	}
+};
+
+generateGeneric = function(name) {
+	eval(
+		'module.exports.' + name + ' = function ' + name + '() {' +
+		'	genericLog(arguments.callee.name, arguments);' +
+		'};'
+	);
+};
+
+generateGeneric('info');
+generateGeneric('debug');
+generateGeneric('success');
+generateGeneric('warn');
+generateGeneric('error');
+
+module.exports.addLevel = function(name, color, debug) {
+	if (typeof color != 'string' || typeof colors[color] == 'undefined') {
+		color = 'white';
+	}
+	if (typeof debug == 'boolean') {
+		debug = false;
+	}
+	levels[name] = {
+		'color': color,
+		'debug': debug
+	}
+	generateGeneric(name);
+};
+
+module.exports.removeLevel = function(name) {
+	delete levels[name];
+	delete module.exports[name];
 };
