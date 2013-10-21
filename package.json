@@ -1,11 +1,11 @@
 {
   "name": "cologger",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": {
 	"name": "Fabio Poloni",
 	"email": "fabio@APP-roved.com"
   },
-  "description": "Colorful, simple logger",
+  "description": "Colorful, simple, customizable logger",
   "keywords": [
 	"color",
 	"logger",
