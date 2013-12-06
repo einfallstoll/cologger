@@ -14,7 +14,7 @@ module.exports.colors = colors;
 levels = {
 	info: {
 		color: 'white',
-		debug: true
+		debug: false
 	},
 	debug: {
 		color: 'cyan',
@@ -22,15 +22,15 @@ levels = {
 	},
 	success: {
 		color: 'green',
-		debug: true
+		debug: false
 	},
 	warn: {
 		color: 'yellow',
-		debug: true
+		debug: false
 	},
 	error: {
 		color: 'red',
-		debug: true
+		debug: false
 	}
 };
 module.exports.levels = levels;
